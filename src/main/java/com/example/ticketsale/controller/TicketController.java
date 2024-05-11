@@ -2,7 +2,6 @@ package com.example.ticketsale.controller;
 
 import com.example.ticketsale.model.Ticket;
 import com.example.ticketsale.service.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,8 +15,11 @@ import java.util.UUID;
 @RestController
 public class TicketController {
 
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
+
+    public TicketController(TicketService ticketService) {
+        this.ticketService = ticketService;
+    }
 
     @GetMapping("/ticket/{id}")
     public Ticket get(@PathVariable("id") UUID id) {

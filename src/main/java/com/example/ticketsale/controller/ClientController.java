@@ -3,7 +3,6 @@ package com.example.ticketsale.controller;
 import com.example.ticketsale.dto.FillBalanceDto;
 import com.example.ticketsale.model.Client;
 import com.example.ticketsale.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/clients")
 public class ClientController {
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
+
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
+    }
 
     @GetMapping({ "", "/" })
     public List<Client> getAll() {

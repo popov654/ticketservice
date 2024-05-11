@@ -3,7 +3,6 @@ package com.example.ticketsale.controller;
 import com.example.ticketsale.dto.EventDto;
 import com.example.ticketsale.model.Event;
 import com.example.ticketsale.service.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @RequestMapping("/events")
 public class EventController {
 
-    @Autowired
-    private EventService eventService;
+    private final EventService eventService;
+
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping({ "", "/" })
     public List<Event> getAll() {
