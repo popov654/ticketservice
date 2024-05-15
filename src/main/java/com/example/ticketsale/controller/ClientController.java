@@ -1,9 +1,9 @@
 package com.example.ticketsale.controller;
 
 import com.example.ticketsale.dto.FillBalanceDto;
+import com.example.ticketsale.dto.ResponseSuccess;
 import com.example.ticketsale.model.Client;
 import com.example.ticketsale.service.ClientService;
-import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,18 +20,17 @@ public class ClientController {
 
     @GetMapping({ "", "/" })
     public List<Client> getAll() {
-        return clientService.getAll();
+        return clientService.getAllClients();
     }
 
     @GetMapping("/{id}")
     public Client get(@PathVariable("id") Long id) {
-        return clientService.get(id);
+        return clientService.getClientById(id);
     }
 
     @PostMapping("/{id}/fillBalance")
-    @Transactional
-    public String fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
+    public Object fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
         clientService.fillBalance(clientId, data.getAmount());
-        return "OK";
+        return new ResponseSuccess("ok");
     }
 }

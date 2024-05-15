@@ -1,5 +1,7 @@
 package com.example.ticketsale.controller;
 
+import com.example.ticketsale.dto.ResponseError;
+import com.example.ticketsale.dto.ResponseSuccess;
 import com.example.ticketsale.model.Ticket;
 import com.example.ticketsale.service.TicketService;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -23,7 +25,7 @@ public class TicketController {
 
     @GetMapping("/ticket/{id}")
     public Ticket get(@PathVariable("id") UUID id) {
-        return ticketService.getById(id);
+        return ticketService.getTicketById(id);
     }
 
     @GetMapping("/ticket/{eventId}/generate")
@@ -37,22 +39,22 @@ public class TicketController {
     }
 
     @GetMapping("/sale/{clientId}/{ticketId}")
-    public String sale(@PathVariable("clientId") long clientId, @PathVariable("ticketId") UUID ticketId) {
+    public Object sale(@PathVariable("clientId") long clientId, @PathVariable("ticketId") UUID ticketId) {
         try {
             ticketService.saleTicket(clientId, ticketId);
-            return "OK";
+            return new ResponseSuccess("ok");
         } catch (Exception e) {
-            return "Error: " + e.getMessage();
+            return new ResponseError(e.getMessage());
         }
     }
 
     @GetMapping("/redeem/{ticketId}")
-    public String redeem(@PathVariable("ticketId") UUID ticketId) {
+    public Object redeem(@PathVariable("ticketId") UUID ticketId) {
         try {
             ticketService.redeemTicket(ticketId);
-            return "OK";
+            return new ResponseSuccess("ok");
         } catch (Exception e) {
-            return "Error: " + e.getMessage();
+            return new ResponseError(e.getMessage());
         }
     }
 }

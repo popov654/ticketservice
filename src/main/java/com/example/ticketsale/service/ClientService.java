@@ -3,6 +3,7 @@ package com.example.ticketsale.service;
 import com.example.ticketsale.model.Client;
 import com.example.ticketsale.repository.ClientRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,15 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
 
-    public Client get(Long id) {
+    public Client getClientById(Long id) {
         return clientRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Client not found"));
     }
 
-    public List<Client> getAll() {
+    public List<Client> getAllClients() {
         return clientRepository.findAll();
     }
 
+    @Transactional
     public void fillBalance(Long clientId, BigDecimal amount) {
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new EntityNotFoundException("Client not found"));
         client.setBalance(client.getBalance().add(amount));

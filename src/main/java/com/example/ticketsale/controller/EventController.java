@@ -28,7 +28,7 @@ public class EventController {
     }
 
     @PostMapping("/new")
-    public Event newEvent(@RequestBody EventDto eventDto) {
+    public Event create(@RequestBody EventDto eventDto) {
         return eventService.createEvent(eventDto.getName(), eventDto.getDate());
     }
 }

@@ -30,7 +30,7 @@ public class TicketService {
     @Autowired
     private EventRepository eventRepository;
 
-    public Ticket getById(UUID id) {
+    public Ticket getTicketById(UUID id) {
         return ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
     }
 
