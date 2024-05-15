@@ -3,6 +3,7 @@ package com.example.ticketsale.controller;
 import com.example.ticketsale.dto.FillBalanceDto;
 import com.example.ticketsale.model.Client;
 import com.example.ticketsale.service.ClientService;
+import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class ClientController {
     }
 
     @PostMapping("/{id}/fillBalance")
+    @Transactional
     public String fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
         clientService.fillBalance(clientId, data.getAmount());
         return "OK";
