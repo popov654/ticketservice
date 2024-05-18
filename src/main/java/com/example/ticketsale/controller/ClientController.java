@@ -28,7 +28,7 @@ public class ClientController {
         return clientService.getClientById(id);
     }
 
-    @PostMapping("/{id}/fillBalance")
+    @PostMapping("/{id}/fill-balance")
     public Object fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
         clientService.fillBalance(clientId, data.getAmount());
         return new ResponseSuccess("ok");
