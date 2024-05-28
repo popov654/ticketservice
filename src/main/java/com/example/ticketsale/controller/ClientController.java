@@ -5,23 +5,21 @@ import com.example.ticketsale.dto.FillBalanceDto;
 import com.example.ticketsale.dto.ResponseSuccess;
 import com.example.ticketsale.dto.mapper.ClientWithBalanceMapper;
 import com.example.ticketsale.service.ClientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
+@AllArgsConstructor
 public class ClientController {
 
     private final ClientService clientService;
 
-    @Autowired
-    private ClientWithBalanceMapper clientMapper;
-
-    public ClientController(ClientService clientService) {
-        this.clientService = clientService;
-    }
+    private final ClientWithBalanceMapper clientMapper;
 
     @GetMapping({ "", "/" })
     public List<ClientWithBalanceDto> getAll() {
@@ -34,8 +32,8 @@ public class ClientController {
     }
 
     @PostMapping("/{id}/fill-balance")
-    public Object fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
+    public ResponseEntity<Object> fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
         clientService.fillBalance(clientId, data.getAmount());
-        return new ResponseSuccess("ok");
+        return new ResponseEntity<Object>(new ResponseSuccess("ok"), HttpStatusCode.valueOf(200));
     }
 }
