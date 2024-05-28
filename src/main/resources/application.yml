@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ticketsale
+  datasource:
+    url: jdbc:sqlite:file:db?cache=shared
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: create-drop
+          show_sql: true
+  sql:
+    init:
+      mode: always
