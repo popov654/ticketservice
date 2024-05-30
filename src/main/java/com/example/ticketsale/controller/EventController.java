@@ -3,6 +3,7 @@ package com.example.ticketsale.controller;
 import com.example.ticketsale.dto.EventDto;
 import com.example.ticketsale.model.Event;
 import com.example.ticketsale.service.EventService;
+import com.example.ticketsale.service.impl.DefaultEventService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public class EventController {
 
     private final EventService eventService;
 
-    public EventController(EventService eventService) {
+    public EventController(DefaultEventService eventService) {
         this.eventService = eventService;
     }
 

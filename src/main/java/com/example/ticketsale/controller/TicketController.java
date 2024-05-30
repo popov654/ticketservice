@@ -4,6 +4,7 @@ import com.example.ticketsale.dto.ResponseError;
 import com.example.ticketsale.dto.ResponseSuccess;
 import com.example.ticketsale.model.Ticket;
 import com.example.ticketsale.service.TicketService;
+import com.example.ticketsale.service.impl.DefaultTicketService;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,7 +20,7 @@ public class TicketController {
 
     private final TicketService ticketService;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(DefaultTicketService ticketService) {
         this.ticketService = ticketService;
     }
 
@@ -35,7 +36,7 @@ public class TicketController {
 
     @GetMapping("/tickets/event/{eventId}")
     public List<Ticket> getByEvent(@PathVariable("eventId") long eventId) {
-        return ticketService.getByEvent(eventId);
+        return ticketService.getTicketByEventId(eventId);
     }
 
     @GetMapping("/sale/{clientId}/{ticketId}")
