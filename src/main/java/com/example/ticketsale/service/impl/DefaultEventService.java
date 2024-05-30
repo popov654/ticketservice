@@ -3,7 +3,6 @@ package com.example.ticketsale.service.impl;
 import com.example.ticketsale.model.Event;
 import com.example.ticketsale.repository.EventRepository;
 import com.example.ticketsale.service.EventService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class DefaultEventService implements EventService {
     }
 
     public Event getEventById(Long id) {
-        return eventRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return eventRepository.getById(id);
     }
 
     public List<Event> getAllEvents() {

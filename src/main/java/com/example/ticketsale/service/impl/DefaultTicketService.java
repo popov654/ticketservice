@@ -10,7 +10,6 @@ import com.example.ticketsale.repository.ClientRepository;
 import com.example.ticketsale.repository.EventRepository;
 import com.example.ticketsale.repository.TicketRepository;
 import com.example.ticketsale.service.TicketService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,18 +31,18 @@ public class DefaultTicketService implements TicketService {
     private EventRepository eventRepository;
 
     public Ticket getTicketById(UUID id) {
-        return ticketRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        return ticketRepository.getById(id);
     }
 
     public List<Ticket> getTicketByEventId(long eventId) {
-        Event event = eventRepository.findById(eventId).orElseThrow(EntityNotFoundException::new);
+        Event event = eventRepository.getById(eventId);
         return ticketRepository.findByEvent(event);
     }
 
     @Transactional
     public void saleTicket(Long clientId, UUID ticketId) throws LowBalanceException, IllegalTicketStateException {
-        Client client = clientRepository.findById(clientId).orElseThrow(() -> new EntityNotFoundException("Client not found"));
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        Client client = clientRepository.getById(clientId);
+        Ticket ticket = ticketRepository.getById(ticketId);
         if (ticket.getStatus() != TicketStatus.ON_SALE) {
             throw new IllegalTicketStateException();
         }
@@ -55,7 +54,7 @@ public class DefaultTicketService implements TicketService {
     }
 
     public Ticket createTicket(Long eventId, BigDecimal cost) {
-        Event event = eventRepository.findById(eventId).orElseThrow(EntityNotFoundException::new);
+        Event event = eventRepository.getById(eventId);
         Ticket ticket = new Ticket();
         ticket.setId(UUID.randomUUID());
         ticket.setEvent(event);
@@ -65,7 +64,7 @@ public class DefaultTicketService implements TicketService {
     }
 
     public void redeemTicket(UUID ticketId) throws IllegalTicketStateException {
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        Ticket ticket = ticketRepository.getById(ticketId);
         if (ticket.getOwner() == null) {
             throw new IllegalTicketStateException();
         }
