@@ -1,7 +1,6 @@
 package com.example.ticketsale.controller;
 
-import com.example.ticketsale.dto.ResponseError;
-import com.example.ticketsale.dto.ResponseSuccess;
+import com.example.ticketsale.dto.Response;
 import com.example.ticketsale.model.Ticket;
 import com.example.ticketsale.service.TicketService;
 import lombok.AllArgsConstructor;
@@ -37,22 +36,22 @@ public class TicketController {
     }
 
     @GetMapping("/sale/{ticket_id}")
-    public ResponseEntity<Object> sale(@RequestParam("client_id") long clientId, @PathVariable("ticket_id") UUID ticketId) {
+    public ResponseEntity<Response> sale(@RequestParam("client_id") long clientId, @PathVariable("ticket_id") UUID ticketId) {
         try {
             ticketService.saleTicket(clientId, ticketId);
-            return new ResponseEntity<Object>(new ResponseSuccess("ok"), HttpStatusCode.valueOf(200));
+            return new ResponseEntity<Response>(Response.success("ok"), HttpStatusCode.valueOf(200));
         } catch (Exception e) {
-            return new ResponseEntity<Object>(new ResponseError(e.getMessage()), HttpStatusCode.valueOf(500));
+            return new ResponseEntity<Response>(Response.error(e.getMessage()), HttpStatusCode.valueOf(500));
         }
     }
 
     @GetMapping("/redeem/{ticket_id}")
-    public ResponseEntity<Object> redeem(@PathVariable("ticket_id") UUID ticketId) {
+    public ResponseEntity<Response> redeem(@PathVariable("ticket_id") UUID ticketId) {
         try {
             ticketService.redeemTicket(ticketId);
-            return new ResponseEntity<Object>(new ResponseSuccess("ok"), HttpStatusCode.valueOf(200));
+            return new ResponseEntity<Response>(Response.success("ok"), HttpStatusCode.valueOf(200));
         } catch (Exception e) {
-            return new ResponseEntity<Object>(new ResponseError(e.getMessage()), HttpStatusCode.valueOf(500));
+            return new ResponseEntity<Response>(Response.error(e.getMessage()), HttpStatusCode.valueOf(500));
         }
     }
 }

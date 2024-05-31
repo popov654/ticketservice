@@ -2,7 +2,7 @@ package com.example.ticketsale.controller;
 
 import com.example.ticketsale.dto.ClientWithBalanceDto;
 import com.example.ticketsale.dto.FillBalanceDto;
-import com.example.ticketsale.dto.ResponseSuccess;
+import com.example.ticketsale.dto.Response;
 import com.example.ticketsale.dto.mapper.ClientWithBalanceMapper;
 import com.example.ticketsale.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -32,8 +32,8 @@ public class ClientController {
     }
 
     @PostMapping("/{id}/fill-balance")
-    public ResponseEntity<Object> fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
+    public ResponseEntity<Response> fill(@PathVariable("id") Long clientId, @RequestBody FillBalanceDto data) {
         clientService.fillBalance(clientId, data.getAmount());
-        return new ResponseEntity<Object>(new ResponseSuccess("ok"), HttpStatusCode.valueOf(200));
+        return new ResponseEntity<Response>(Response.success("ok"), HttpStatusCode.valueOf(200));
     }
 }
