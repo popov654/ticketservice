@@ -1,6 +1,6 @@
 package com.example.ticketsale.exception;
 
-public class LowBalanceException extends Exception {
+public class LowBalanceException extends RuntimeException {
     public LowBalanceException() {}
 
     public LowBalanceException(String message) {
