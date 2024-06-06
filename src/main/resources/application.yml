@@ -8,7 +8,7 @@ spring:
     properties:
       hibernate:
         hbm2ddl:
-          auto: create-drop
+          # auto: create-drop
           show_sql: true
   sql:
     init:
